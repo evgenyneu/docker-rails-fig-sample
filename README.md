@@ -25,26 +25,56 @@ Installation instructions for [Fig][] may be found in [Installing Fig][].
 [Installing Fig]: http://www.fig.sh/install.html
 
 ## Usage
-Before we can run the dev env, we must first setup the database. This is only
-needed when running for the first time. After doing so, we'll be able to run
-both applications simultaneously.
+This approach makes use of [data volume containers][]:
 
+* A `gems-<RUBY_VERSION>` container for persisting the used gems. This container
+will be used by multiple projects, saving disk space and enabling `bundle
+install` and `bundle update` commands to make use of cache.
+* A `<APP_NAME>-db-data` container for persisting the database's data. This
+allows us to remove the database's container while persisting the data for later
+usage.
+
+Because Fig only creates containers on a specific namespace (it uses the
+folder's name) and because `fig rm` removes every container declared on the
+`fig.yml`, these two data volume containers have to be created before using
+Fig.
+
+In order to ease the pain of this process, a script was created, `project.sh`.
+After having followed the steps detailed in [Prepare your
+application](#prepare-your-application), run
+
+```bash
+./project.sh bootstrap
 ```
-fig up -d db              # starts the database detached from the current window
-fig run web rake db:setup # setups the database by running a one-off command
-fig up                    # starts the web application attached to the window
+
+This will:
+
+* Pull (download) the necessary Docker images;
+* Create both data volume containers;
+* Create the database container;
+* Build the application (`web`) container;
+* Install `bundler` (when running for the first time);
+* Install the application's dependencies;
+* Run `rake db:setup` (or your custom bootstrapping instructions).
+
+Because the bootstrap phase pulls the necessary Docker images, it
+may take a while.
+
+From now on, you'll only have to run
+
+```bash
+./project.sh start
 ```
 
-The app should now be running on [localhost:3000](http://localhost:3000/).
+and open your browser on the printed location.
 
-**Note**: The first time you run `fig up` will _pull_ (download) the necessary
-Docker images. This may take a while.
+In the future, you may run `./project.sh stop` to stop your containers.
+For removing the containers, you may run `./project.sh clean` (or `./project.sh
+project-clean` if you don't plan to use the database's data anymore).
 
-Since the database has been setup, from now on it is possible to start both
-applications simply by running `fig up`. For stopping the applications, you may
-run `fig stop`. For removing the containers, you may run `fig rm`. Run
-`fig help` for more options or refer to the [Fig CLI Documentation][]. For
-customizing the `fig.yml`, refer to [fig.yml Documentation][].
+Run `./project.sh help` for a list of the available commands. You may also refer
+to the [Fig CLI Documentation][] or to [fig.yml Documentation][] for customizing
+the `fig.yml`.
 
 [Fig CLI Documentation]: http://www.fig.sh/cli.html
 [fig.yml Documentation]: http://www.fig.sh/yml.html
