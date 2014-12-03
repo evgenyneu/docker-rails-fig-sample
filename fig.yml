@@ -1,5 +1,7 @@
 db:
   image: postgres:9.3
+  volumes_from:
+    - rails-pg-fig-sample-db-data
   ports:
     - 5432
 web:
@@ -7,6 +9,8 @@ web:
   command: bundle exec unicorn -p 3000 -c ./config/unicorn.rb
   volumes:
     - .:/usr/src/app
+  volumes_from:
+    - gems-2.1
   ports:
     - "3000:3000"
   links:
