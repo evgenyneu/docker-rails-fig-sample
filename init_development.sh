@@ -53,9 +53,9 @@ bootstrap(){
   create_data_container_if_not_exists $DB_DATA_CONTAINER_NAME "/var/lib/postgresql/data/"
 
   # Build the web container
-  # print_info "Building the web container."
-  # fig build web
-  # handle_error $? "building the web container"
+  print_info "Building the web container."
+  fig build web
+  handle_error $? "building the web container"
 
   # # Bundle install
   # print_normal

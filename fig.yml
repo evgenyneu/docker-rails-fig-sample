@@ -10,7 +10,7 @@ web:
   volumes:
     - .:/usr/src/app
   volumes_from:
-    - gems-2.1
+    - iiapp-gems-2.1
   ports:
     - "3000:3000"
   links:
