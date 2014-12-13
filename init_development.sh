@@ -17,6 +17,7 @@ handle_error(){
 APP_NAME=iiapp
 DB_DATA_CONTAINER_NAME=$APP_NAME-db-data
 DOCKER_MINIMAL_IMAGE=tianon/true
+DEV_FIG_YML=fig_development.yml
 
 # `docker info` call for testing if the Docker host is reachable.
 # Usage: check_docker
@@ -67,7 +68,10 @@ create_data_container_if_not_exists(){
   fi
 }
 
+# Build containers
 bootstrap(){
+  print_info "Bootstrapping $APP_NAME"
+
   create_data_container_if_not_exists $DB_DATA_CONTAINER_NAME "/var/lib/postgresql/data/"
 
   # Build the web container
@@ -85,7 +89,7 @@ case "$1" in
     print_normal "Usage: $0 COMMAND"
     print_normal
     print_normal "Available commands:"
-    print_normal "  bootstrap"
+    print_normal "  bootstrap - Builds develepment environment. This command is run on a clean dev machine."
   ;;
 esac
 
