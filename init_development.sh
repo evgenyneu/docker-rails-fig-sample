@@ -57,11 +57,11 @@ bootstrap(){
   fig build web
   handle_error $? "building the web container"
 
-  # # Bundle install
-  # print_normal
-  # print_info "Bundle install"
-  # fig run web bundle install --jobs 4 --retry 3
-  # handle_error $? "installing the app's dependencies"
+  # Bundle install
+  print_normal
+  print_info "Bundle install"
+  fig run web bundle install --jobs 4 --retry 3
+  handle_error $? "installing the app's dependencies"
 
   # # Setup database
   # print_info "Setting up the database (rake db:setup)"
