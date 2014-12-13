@@ -1,18 +1,19 @@
 FROM ruby:2.1.5
 
+RUN bundle config --global frozen 1
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ENV GEM_HOME /usr/local/bundle
-ENV PATH $GEM_HOME/bin:$PATH
+COPY Gemfile /usr/src/app/
+COPY Gemfile.lock /usr/src/app/
+RUN bundle install
 
-# Installing common RoR dependencies: Node.js and database clients
-# Remove the clients you don't use and modify to your needs.
+COPY . /usr/src/app
+
 RUN apt-get update && apt-get install -y --no-install-recommends nodejs && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y --no-install-recommends \
-      mysql-client \
       postgresql-client \
-      sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 EXPOSE 3000
