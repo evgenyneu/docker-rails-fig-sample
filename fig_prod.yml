@@ -5,7 +5,7 @@ db:
   ports:
     - 5432
 webprod:
-  build: ./prod_build
+  image: evgenyneu/webprod
   command: bundle exec unicorn -p 3000 -c ./config/unicorn.rb
   ports:
     - "3000:3000"
