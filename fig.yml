@@ -9,6 +9,8 @@ web:
   command: bundle exec unicorn -p 3000 -c ./config/unicorn.rb
   volumes:
     - .:/usr/src/app
+  volumes_from:
+    - gems-2.1
   ports:
     - "3000:3000"
   links:

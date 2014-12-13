@@ -8,9 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ONBUILD COPY Gemfile /usr/src/app/
-ONBUILD COPY Gemfile.lock /usr/src/app/
-ONBUILD RUN bundle install
+ENV GEM_HOME /usr/local/bundle
+ENV PATH $GEM_HOME/bin:$PATH
 
 ONBUILD COPY . /usr/src/app
 

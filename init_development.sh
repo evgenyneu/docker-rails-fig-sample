@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
 APP_NAME=iiapp
-DB_DATA_CONTAINER_NAME=$APP_NAME-db-data
+
 DOCKER_MINIMAL_IMAGE=tianon/true
-DEV_FIG_YML=fig_development.yml
+DB_DATA_CONTAINER_NAME=$APP_NAME-db-data
+
+RUBY_VERSION=2.1
+GEMS_CONTAINER_NAME=$APP_NAME-gems-$RUBY_VERSION
 
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }
@@ -29,13 +32,13 @@ create_data_container(){
 # Usage: create_data_container CONTAINER_NAME VOLUME_PATH
 create_data_container_if_not_exists(){
   # Check if the database data container already exists. If not, create it.
-  if [ -n "$(docker ps -a | grep $DB_DATA_CONTAINER_NAME)" ]; then
-    print_success "The database data container ($DB_DATA_CONTAINER_NAME) already exists."
+  if [ -n "$(docker ps -a | grep $1)" ]; then
+    print_success "The data container ($1) already exists."
   else
-    print_info "Creating the database data container ($DB_DATA_CONTAINER_NAME)."
+    print_info "Creating the database data container ($1)."
     create_data_container $1 $2
-    handle_error $? "creating $DB_DATA_CONTAINER_NAME"
-    print_success "Database data container ($DB_DATA_CONTAINER_NAME) successfully created."
+    handle_error $? "creating $1"
+    print_success "Data container ($1) successfully created."
   fi
 }
 
@@ -43,21 +46,27 @@ create_data_container_if_not_exists(){
 bootstrap(){
   print_info "Bootstrapping $APP_NAME"
 
+  print_info "Creating the gems container for Ruby $RUBY_VERSION ($GEMS_CONTAINER_NAME)."
+  create_data_container_if_not_exists $GEMS_CONTAINER_NAME "/usr/local/bundle"
+
+  print_info "Creating the database data container ($DB_DATA_CONTAINER_NAME)."
   create_data_container_if_not_exists $DB_DATA_CONTAINER_NAME "/var/lib/postgresql/data/"
 
   # Build the web container
-  print_info "Building the web container."
-  fig build web
-  handle_error $? "building the web container"
+  # print_info "Building the web container."
+  # fig build web
+  # handle_error $? "building the web container"
 
-  # Install bundler
-  # print_info "Installing bundler."
-  # fig run web gem install bundler
-  # handle_error $? "installing bundler"
+  # # Bundle install
+  # print_normal
+  # print_info "Bundle install"
+  # fig run web bundle install --jobs 4 --retry 3
+  # handle_error $? "installing the app's dependencies"
 
-  print_info "Bundle install"
-  fig run web bundle install --jobs 4 --retry 3
-  handle_error $? "installing the app's dependencies"
+  # # Setup database
+  # print_info "Setting up the database (rake db:setup)"
+  # fig run web rake db:setup
+  # handle_error $? "setting up the database"
 }
 
 bootstrap
