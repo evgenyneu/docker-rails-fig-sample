@@ -1,7 +1,7 @@
 db:
   image: postgres:9.3
   volumes_from:
-    - rails-pg-fig-sample-db-data
+    - iiapp-db-data
   ports:
     - 5432
 web:
