@@ -42,6 +42,20 @@ create_data_container_if_not_exists(){
   fi
 }
 
+install_bundler_if_needed(){
+  # Check if the gems container was just created; if so, install bundler.
+  if [ -z "$(docker ps -a | grep $GEMS_CONTAINER_NAME)" ]; then
+    print_info "Gems container is new, installing bundler."
+    fig run web gem install bundler
+    handle_error $? "installing bundler"
+  else
+    print_info "Gems container already existed before this script: assuming bundler is already installed."
+    print_info "In the case of failure, run"
+    print_info "  fig run web gem install bundler"
+    print_info "and re-run this script."
+  fi
+}
+
 # Build containers
 bootstrap(){
   print_info "Bootstrapping $APP_NAME"
@@ -56,6 +70,9 @@ bootstrap(){
   print_info "Building the web container."
   fig build web
   handle_error $? "building the web container"
+
+  # Install bundler
+  install_bundler_if_needed
 
   # Bundle install
   print_normal
