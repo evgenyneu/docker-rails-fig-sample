@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+APP_NAME=iiapp
+DB_DATA_CONTAINER_NAME=$APP_NAME-db-data
+DOCKER_MINIMAL_IMAGE=tianon/true
+DEV_FIG_YML=fig_development.yml
+
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }
 print_error  (){ printf "$(tput setaf 1)[fig-tree] %b$(tput sgr0)\n" "$1" >&2; }
@@ -13,40 +18,6 @@ handle_error(){
     exit 1
   fi
 }
-
-APP_NAME=iiapp
-DB_DATA_CONTAINER_NAME=$APP_NAME-db-data
-DOCKER_MINIMAL_IMAGE=tianon/true
-DEV_FIG_YML=fig_development.yml
-
-# `docker info` call for testing if the Docker host is reachable.
-# Usage: check_docker
-check_docker(){
-  docker info > /dev/null 2>&1
-  if [ $? -ne 0 ]; then
-    print_error "ERROR: Docker host could not be reached. Maybe you need sudo?"
-    exit 1
-  fi
-}
-
-# Stop a container by name.
-# Usage: stop_container_by_name CONTAINER_NAME
-stop_container_by_name(){
-  docker ps -a | grep $1 | awk '{ print $1 }' | xargs --no-run-if-empty docker stop
-}
-
-# Remove a container by name.
-# Usage: remove_container_by_name CONTAINER_NAME
-remove_container_by_name(){
-  docker ps -a | grep $1 | awk '{ print $1 }' | xargs --no-run-if-empty docker rm
-}
-
-# Remove an image by name.
-# Usage: remove_image_by_name IMAGE_NAME
-remove_image_by_name(){
-  docker images -a | grep $1 | awk '{ print $3 }' | xargs --no-run-if-empty docker rmi
-}
-
 
 # Create a data volume container for a specific path.
 # Usage: create_data_container CONTAINER_NAME VOLUME_PATH
@@ -78,19 +49,17 @@ bootstrap(){
   print_info "Building the web container."
   fig build web
   handle_error $? "building the web container"
+
+  # Install bundler
+  # print_info "Installing bundler."
+  # fig run web gem install bundler
+  # handle_error $? "installing bundler"
+
+  print_info "Bundle install"
+  fig run web bundle install --jobs 4 --retry 3
+  handle_error $? "installing the app's dependencies"
 }
 
-case "$1" in
-  "bootstrap")
-    bootstrap
-  ;;
-
-  *)
-    print_normal "Usage: $0 COMMAND"
-    print_normal
-    print_normal "Available commands:"
-    print_normal "  bootstrap - Builds develepment environment. This command is run on a clean dev machine."
-  ;;
-esac
+bootstrap
 
 exit 0
