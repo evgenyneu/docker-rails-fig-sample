@@ -24,11 +24,17 @@ CONTAINER_NAME=$1
 VOLUME_PATH=$2
 HOST_SSH_ADDRESS=$3
 
-./scripts/docker_data_volume_container_backup.sh CONTAINER_NAME VOLUME_PATH
+ARCHIVE_FILE_NAME=$CONTAINER_NAME.tar.gz
+
+./scripts/docker_data_volume_container_backup.sh $CONTAINER_NAME $VOLUME_PATH
 handle_error $? "archiving container $CONTAINER_NAME"
 
-ssh HOST_SSH_ADDRESS mkdir backups
+ssh $HOST_SSH_ADDRESS 'mkdir -p ~/backups'
 handle_error $? "creating backups directory on $HOST_SSH_ADDRESS"
 
-scp CONTAINER_NAME.tar.gz HOST_SSH_ADDRESS:~/backups/.
-handle_error $? "copying $CONTAINER_NAME.tar.gz to $HOST_SSH_ADDRESS"
+print_info "Copying $ARCHIVE_FILE_NAME to $HOST_SSH_ADDRESS"
+scp $ARCHIVE_FILE_NAME $HOST_SSH_ADDRESS:~/backups/.
+handle_error $? "copying $ARCHIVE_FILE_NAME to $HOST_SSH_ADDRESS"
+
+rm $ARCHIVE_FILE_NAME
+handle_error $? "removing $ARCHIVE_FILE_NAME"
