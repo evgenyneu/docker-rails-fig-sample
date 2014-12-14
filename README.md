@@ -36,9 +36,28 @@ Following docker containers are created:
 
 ### Create a deployment image
 
-`./script/docker_create_deploy_image.sh myaccount/deployment_image`
+`./script/docker_create_deploy_image.sh myaccount/image`
 
 User your Docker Hub account name and deployment image name.
+
+### Push the image to your private Docker Hub repository.
+
+`docker push myaccount/image`
+
+### Copy fig_production.yml
+
+1. In `fig_production.yml` replace `myaccount/image` with correct account and image.
+1. Copy `fig_production.yml` to `fig.yml` on your production host.
+1. Use docker_upload_data_volume_container.sh to upload database files and Gems to your server:
+
+```
+./scripts/docker_upload_data_volume_container.sh iipersist-gems-2.1 /usr/local/bundle myserver.com
+./scripts/docker_upload_data_volume_container.sh iipersist-db-data /var/lib/postgresql/data myserver.com
+```
+
+### Create production environment
+
+Run `fig up` on your production host.
 
 ## Scripts
 
