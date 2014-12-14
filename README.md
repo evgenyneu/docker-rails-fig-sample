@@ -94,9 +94,20 @@ Uploads iipersist-db-data Data Volume Container to myserver.com host.
 
 ## Reference
 
-Useful resources that helped me with this project:
+Resources that helped me with this project:
+
+* [Dockerizing Applications: A "Hello world"](https://docs.docker.com/userguide/dockerizing/)
 
 * [How to Create a Persistent Ruby Gems Container with Docker](http://www.atlashealth.com/blog/2014/09/persistent-ruby-gems-docker-container/)
+
+* [Orchestrating Docker containers in production using Fig](http://blog.docker.com/2014/08/orchestrating-docker-containers-in-production-using-fig/)
+
+* [A Rails development environment using Docker through Fig](http://www.whitesmith.co/blog/a-rails-development-environment-using-docker-through-fig/)
+
+## Homies help homies, always
+
+If you stuck and need help - do not hesitate and create a ticket.
+
 
 
 
