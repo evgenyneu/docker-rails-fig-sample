@@ -132,7 +132,7 @@ Resources that helped me with this project:
 
 ## Feedback welcome
 
-If you stuck and need help - do not hesitate to create a ticket.
+If you stuck and need help - do not hesitate to ask.
 
 
 
