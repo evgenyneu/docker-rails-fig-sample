@@ -3,10 +3,10 @@
 APP_NAME=iiapp
 
 DOCKER_MINIMAL_IMAGE=tianon/true
-DB_DATA_CONTAINER_NAME=$APP_NAME-db-data
+DB_DATA_CONTAINER_NAME=iipersist-db-data
 
 RUBY_VERSION=2.1
-GEMS_CONTAINER_NAME=$APP_NAME-gems-$RUBY_VERSION
+GEMS_CONTAINER_NAME=iipersist-gems-$RUBY_VERSION
 
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }
