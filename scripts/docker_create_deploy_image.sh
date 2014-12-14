@@ -3,7 +3,7 @@
 # Creates a docker image for deployment. The app srouce code is copied into the image.
 #
 # Usage:
-#   docker_create_deploy_image.sh
+#   docker_create_deploy_image.sh myaccount/name
 
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }
@@ -19,7 +19,6 @@ handle_error(){
   fi
 }
 
-
 # Swaps two dockerfiles
 # Usage: swap_dockerfiles Dockerfile_deployment Dockerfile_development
 swap_dockerfiles(){
@@ -32,7 +31,7 @@ swap_dockerfiles(){
 
 DEPLOYMENT_DOCKERFILE=Dockerfile_deployment
 DEVELOPMENT_DOCKERFILE=Dockerfile_development
-DEPLOYMENT_IMAGE_NAME=evgenyneu/rails_prod
+DEPLOYMENT_IMAGE_NAME=$1
 
 swap_dockerfiles $DEPLOYMENT_DOCKERFILE $DEVELOPMENT_DOCKERFILE
 

@@ -5,7 +5,7 @@ db:
   ports:
     - 5432
 web:
-  image: evgenyneu/rails_prod
+  image: myaccount/deployment_image
   command: bundle exec unicorn -p 3000 -c ./config/unicorn.rb
   volumes_from:
     - iipersist-gems-2.1
