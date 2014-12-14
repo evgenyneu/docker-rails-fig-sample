@@ -1,6 +1,6 @@
 # Using Rails/Postgres with Docker and Fig
 
-This repository is a sample Rails app. It uses Docker to keep its compenents in separate containers.
+This repository for a sample Rails app with a Docker.
 This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](https://github.com/whitesmith/rails-pg-fig-sample).
 
 ## Installation
@@ -18,16 +18,16 @@ This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](
 
 ### Rails app docker image
 
-It creates one docker image caleld `web`. This is rails image.
+It creates a docker image called `web`. This is rails image.
 It is configured to keep rails app source code on developer host and not in the image.
-This way one can make changes to the source code and see results in the browser immediatelly.
+This way one can make changes to the source code and see results in the browser.
 
 ### Docker containers
 
 Following docker containers are created:
 
 1. **Web** for Rails app
-1. **DB** for Postres DB server
+1. **DB** for Postgres DB server
 1. **iipersist-db-data** is a [Data Volume Container](https://docs.docker.com/userguide/dockervolumes/) for database
 1. **iipersist-gems-2.1** is another Data Volume Container for the gems.
 
@@ -49,11 +49,11 @@ This script can be run after `fig stop` and `fig rm`.
 
 Backup data from data volume container into a tar.gz file in the current directory.
 
-Usage:
+__Usage:__
 
 `docker_data_volume_container_backup.sh CONTAINER_NAME VOLUME_PATH`
 
-Example:
+__Example:__
 
 `./docker_data_volume_container_backup.sh iipersist-db-data /var/lib/postgresql/data`
 
@@ -62,11 +62,11 @@ Example:
 
 Restore data from CONTAINER_NAME.tar.gz into a data volume container.
 
-Usage:
+__Usage:__
 
 `docker_data_volume_container_backup.sh CONTAINER_NAME VOLUME_PATH`
 
-Example:
+__Example:__
 
 Restore iipersist-db-data.tar.gz into iipersist-db-data Data Volume Container:
 
@@ -83,11 +83,11 @@ The job includes the following steps:
 1. Copies the archive to remote host.
 1. Restores the archive into the data volume container on remote host.
 
-Usage:
+__Usage:__
 
 `docker_upload_data_volume_container.sh CONTAINER_NAME VOLUME_PATH HOST_SSH_ADDRESS`
 
-Example:
+__Example:__
 
 Uploads iipersist-db-data Data Volume Container to myserver.com host.
 
