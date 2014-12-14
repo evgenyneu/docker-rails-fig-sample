@@ -1,12 +1,14 @@
 db:
   image: postgres:9.3
   volumes_from:
-    - rails-pg-fig-sample-db-data
+    - iipersist-db-data
   ports:
     - 5432
-webprod:
-  image: evgenyneu/webprod
+web:
+  image: evgenyneu/rails_prod
   command: bundle exec unicorn -p 3000 -c ./config/unicorn.rb
+  volumes_from:
+    - iipersist-gems-2.1
   ports:
     - "3000:3000"
   links:
