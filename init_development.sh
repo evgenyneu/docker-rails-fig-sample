@@ -6,7 +6,7 @@ DOCKER_MINIMAL_IMAGE=tianon/true
 DB_DATA_CONTAINER_NAME=iipersist-db-data
 
 RUBY_VERSION=2.1
-GEMS_CONTAINER_NAME=iipersist-gems-$RUBY_VERSION
+GEMS_CONTAINER_NAME=iipersist-gems-2.1
 
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }
@@ -35,7 +35,7 @@ create_data_container_if_not_exists(){
   if [ -n "$(docker ps -a | grep $1)" ]; then
     print_success "The data container ($1) already exists."
   else
-    print_info "Creating the database data container ($1)."
+    print_info "Creating data container ($1)."
     create_data_container $1 $2
     handle_error $? "creating $1"
     print_success "Data container ($1) successfully created."
@@ -63,7 +63,7 @@ bootstrap(){
   print_info "Bootstrapping $APP_NAME"
 
   local GEMS_CONTAINER=$(docker ps -a | grep $GEMS_CONTAINER_NAME)
-  print_info "Creating the gems container for Ruby $RUBY_VERSION ($GEMS_CONTAINER_NAME)."
+  print_info "Creating the gems container for Ruby $GEMS_CONTAINER_NAME."
   create_data_container_if_not_exists $GEMS_CONTAINER_NAME "/usr/local/bundle"
 
   print_info "Creating the database data container ($DB_DATA_CONTAINER_NAME)."
@@ -85,7 +85,7 @@ bootstrap(){
 
   # Setup database
   print_info "Setting up the database (rake db:setup)"
-  fig run web rake db:setup
+  fig run web rake db:migrate
   handle_error $? "setting up the database"
 
   print_normal

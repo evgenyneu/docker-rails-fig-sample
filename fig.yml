@@ -1,7 +1,7 @@
 db:
   image: postgres:9.3
   volumes_from:
-    - iiapp-db-data
+    - iipersist-db-data
   ports:
     - 5432
 web:
@@ -10,7 +10,7 @@ web:
   volumes:
     - .:/usr/src/app
   volumes_from:
-    - iiapp-gems-2.1
+    - iipersist-gems-2.1
   ports:
     - "3000:3000"
   links:
