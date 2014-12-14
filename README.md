@@ -9,7 +9,7 @@ This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](
 1. Install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh).
 1. Run `./scripts/init_development.sh` to create development environment.
 1. Run `fig up` to start rails web server.
-1. Open `http://localhost:3000/` in the web browser. On Mac OS, use 'boot2docker ip' to get local IP address.
+1. Open `http://localhost:3000/` in the web browser. On Mac OS, run `boot2docker ip` command to get local IP address.
 
 ***`fig stop`*** - stops the app.
 ***`fig rm`*** - removes the app containers.
