@@ -33,8 +33,6 @@ Following docker containers are created:
 
 ## Deploying to production
 
-(Work in progress)
-
 ### 1. Create a deployment image
 
 `./script/docker_create_deploy_image.sh myaccount/image`
