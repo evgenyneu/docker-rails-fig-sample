@@ -20,7 +20,7 @@ This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](
 
 It creates a docker image for the Rails app called `web`.
 It is configured to keep the source code on developer host and not in the image.
-This way one can make changes to the source code and see results in the browser.
+It allows to make changes to the source code and see results in the browser.
 
 ### Docker containers
 
