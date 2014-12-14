@@ -83,10 +83,14 @@ bootstrap(){
   fig run web bundle install --jobs 4 --retry 3
   handle_error $? "installing the app's dependencies"
 
-  # # Setup database
-  # print_info "Setting up the database (rake db:setup)"
-  # fig run web rake db:setup
-  # handle_error $? "setting up the database"
+  # Setup database
+  print_info "Setting up the database (rake db:setup)"
+  fig run web rake db:setup
+  handle_error $? "setting up the database"
+
+  print_normal
+  print_success "The project was successfully setup! "
+  print_success "Run 'fig up' to start the server."
 }
 
 bootstrap
