@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 
-# This script does following steps:
-#   1. It archives a local data volume container/
+#
+# This script uploads data volume container to a remote host.
+#
+# The job includes the following steps:
+#
+#   1. It archives a local data volume container.
 #   2. Copies the archive to remote host.
 #   3. Restores the archive into the data volume container on remote host.
-# Usage: docker_data_volume_container_backup_and_restore.sh CONTAINER_NAME VOLUME_PATH HOST_SSH_ADDRESS
+#
+# Usage:
+#
+#   docker_upload_data_volume_container.sh CONTAINER_NAME VOLUME_PATH HOST_SSH_ADDRESS
+#
+# Example:
+#
+# Uploads iipersist-db-data Data Volume Container to myserver.com host.
+#
+#   ./docker_upload_data_volume_container.sh iipersist-db-data /var/lib/postgresql/data myserver.com
 
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }

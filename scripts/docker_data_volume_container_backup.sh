@@ -1,7 +1,12 @@
 #!/usr/bin/env bash
 
 # Backup data from data volume container into a tar.gz file in the current directory.
-# Usage: docker_data_volume_container_backup.sh CONTAINER_NAME VOLUME_PATH
+#
+# Usage:
+#   docker_data_volume_container_backup.sh CONTAINER_NAME VOLUME_PATH
+#
+# Example:
+#   ./docker_data_volume_container_backup.sh iipersist-db-data /var/lib/postgresql/data
 
 # Fancy prints
 print_normal (){ printf "%b\n" "$1" >&2; }
