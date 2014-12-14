@@ -6,7 +6,7 @@ This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](
 ## Installation
 
 1. Install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh).
-1. Run `./init_development.sh` to create development environment.
+1. Run `./scripts/init_development.sh` to create development environment.
 1. Run `fig up` to start rails web server.
 
 ### Other useful commands
