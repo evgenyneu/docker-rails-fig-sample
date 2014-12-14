@@ -34,17 +34,17 @@ Following docker containers are created:
 
 (Work in progress)
 
-### Create a deployment image
+### 1. Create a deployment image
 
 `./script/docker_create_deploy_image.sh myaccount/image`
 
 User your Docker Hub account name and deployment image name.
 
-### Push the image to your private Docker Hub repository.
+### 2. Push the image to your private Docker Hub repository.
 
 `docker push myaccount/image`
 
-### Copy fig_production.yml
+### 3. Copy fig_production.yml
 
 1. In `fig_production.yml` replace `myaccount/image` with correct account and image.
 1. Copy `fig_production.yml` to `fig.yml` on your production host.
@@ -55,9 +55,9 @@ User your Docker Hub account name and deployment image name.
 ./scripts/docker_upload_data_volume_container.sh iipersist-db-data /var/lib/postgresql/data myserver.com
 ```
 
-### Create production environment
+### 4. Create production environment
 
-Run `fig up` on your production host.
+Finally, run `fig up` on your production host.
 
 ## Scripts
 
