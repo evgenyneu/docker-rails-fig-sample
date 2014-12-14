@@ -25,16 +25,29 @@ VOLUME_PATH=$2
 HOST_SSH_ADDRESS=$3
 
 ARCHIVE_FILE_NAME=$CONTAINER_NAME.tar.gz
+BACKUP_DIR=backups
 
-./scripts/docker_data_volume_container_backup.sh $CONTAINER_NAME $VOLUME_PATH
-handle_error $? "archiving container $CONTAINER_NAME"
+if [ -n "$(ssh $HOST_SSH_ADDRESS \"sudo docker ps -a | grep $CONTAINER_NAME)\")" ]; then
+  print_error "The data container ($CONTAINER_NAME) already exists. Please remove it first on remote host $HOST_SSH_ADDRESS"
+else
+  ./scripts/docker_data_volume_container_backup.sh $CONTAINER_NAME $VOLUME_PATH
+  handle_error $? "archiving container $CONTAINER_NAME"
 
-ssh $HOST_SSH_ADDRESS 'mkdir -p ~/backups'
-handle_error $? "creating backups directory on $HOST_SSH_ADDRESS"
+  ssh $HOST_SSH_ADDRESS "mkdir -p ~/$BACKUP_DIR"
+  handle_error $? "creating backups directory on $HOST_SSH_ADDRESS"
 
-print_info "Copying $ARCHIVE_FILE_NAME to $HOST_SSH_ADDRESS"
-scp $ARCHIVE_FILE_NAME $HOST_SSH_ADDRESS:~/backups/.
-handle_error $? "copying $ARCHIVE_FILE_NAME to $HOST_SSH_ADDRESS"
+  print_info "Copying $ARCHIVE_FILE_NAME to $HOST_SSH_ADDRESS"
+  scp $ARCHIVE_FILE_NAME $HOST_SSH_ADDRESS:~/$BACKUP_DIR/.
+  handle_error $? "copying $ARCHIVE_FILE_NAME to $HOST_SSH_ADDRESS"
 
-rm $ARCHIVE_FILE_NAME
-handle_error $? "removing $ARCHIVE_FILE_NAME"
+  rm $ARCHIVE_FILE_NAME
+  handle_error $? "removing $ARCHIVE_FILE_NAME"
+
+  ssh $HOST_SSH_ADDRESS "cd $BACKUP_DIR; sudo bash -s" < ./scripts/docker_data_volume_container_restore.sh $CONTAINER_NAME $VOLUME_PATH
+  handle_error $? "restoring data volume container $CONTAINER_NAME on $HOST_SSH_ADDRESS from archive ~/$BACKUP_DIR/$ARCHIVE_FILE_NAME"
+
+  print_normal
+  print_success "Data container $CONTAINER_NAME successfully copied to remote host $HOST_SSH_ADDRESS"
+
+  exit 0
+fi
