@@ -36,7 +36,8 @@ DEPLOYMENT_IMAGE_NAME=evgenyneu/rails_prod
 
 swap_dockerfiles $DEPLOYMENT_DOCKERFILE $DEVELOPMENT_DOCKERFILE
 
-docker build -t DEPLOYMENT_IMAGE_NAME .
+docker build -t $DEPLOYMENT_IMAGE_NAME .
+handle_error $? "building Docker image $DEPLOYMENT_IMAGE_NAME"
 
 swap_dockerfiles $DEVELOPMENT_DOCKERFILE $DEPLOYMENT_DOCKERFILE
 
