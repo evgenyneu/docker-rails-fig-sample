@@ -34,6 +34,12 @@ Following docker containers are created:
 
 (Work in progress)
 
+### Create a deployment image
+
+`./script/docker_create_deploy_image.sh myaccount/deployment_image`
+
+User your Docker Hub account name and deployment image name.
+
 ## Scripts
 
 Scripts are located in `scripts` directory.
