@@ -29,7 +29,7 @@ create_data_container(){
 }
 
 # Create a data volume container for a specific path if it does not exist
-# Usage: create_data_container CONTAINER_NAME VOLUME_PATH
+# Usage: create_data_container_if_not_exists CONTAINER_NAME VOLUME_PATH
 create_data_container_if_not_exists(){
   # Check if the database data container already exists. If not, create it.
   if [ -n "$(docker ps -a | grep $1)" ]; then
@@ -42,9 +42,11 @@ create_data_container_if_not_exists(){
   fi
 }
 
+# Runs bundle install
+# Usage: install_bundler_if_needed GEMS_CONTAINER
 install_bundler_if_needed(){
   # Check if the gems container was just created; if so, install bundler.
-  if [ -z "$(docker ps -a | grep $GEMS_CONTAINER_NAME)" ]; then
+  if [ -z "$1" ]; then
     print_info "Gems container is new, installing bundler."
     fig run web gem install bundler
     handle_error $? "installing bundler"
@@ -60,6 +62,7 @@ install_bundler_if_needed(){
 bootstrap(){
   print_info "Bootstrapping $APP_NAME"
 
+  local GEMS_CONTAINER=$(docker ps -a | grep $GEMS_CONTAINER_NAME)
   print_info "Creating the gems container for Ruby $RUBY_VERSION ($GEMS_CONTAINER_NAME)."
   create_data_container_if_not_exists $GEMS_CONTAINER_NAME "/usr/local/bundle"
 
@@ -72,7 +75,7 @@ bootstrap(){
   handle_error $? "building the web container"
 
   # Install bundler
-  install_bundler_if_needed
+  install_bundler_if_needed $GEMS_CONTAINER
 
   # Bundle install
   print_normal
