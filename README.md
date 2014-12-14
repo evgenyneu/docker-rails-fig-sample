@@ -8,8 +8,7 @@ This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](
 1. Install [Docker](https://www.docker.com/) and [Fig](http://www.fig.sh).
 1. Run `./scripts/init_development.sh` to create development environment.
 1. Run `fig up` to start rails web server.
-
-### Other useful commands
+1. Open `http://localhost:3000/` in the web browser. On Mac OS, use ip returned by 'boot2docker ip' instead of `localhost`.
 
 ***`fig stop`*** - stops the app.
 ***`fig rm`*** - removes the app containers.
@@ -18,17 +17,17 @@ This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](
 
 ### Rails app docker image
 
-It creates a docker image called `web`. This is rails image.
-It is configured to keep rails app source code on developer host and not in the image.
+It creates a docker image for the Rails app called `web`.
+It is configured to keep the source code on developer host and not in the image.
 This way one can make changes to the source code and see results in the browser.
 
 ### Docker containers
 
 Following docker containers are created:
 
-1. **Web** for Rails app
-1. **DB** for Postgres DB server
-1. **iipersist-db-data** is a [Data Volume Container](https://docs.docker.com/userguide/dockervolumes/) for database
+1. **Web** for Rails app.
+1. **DB** for Postgres DB server.
+1. **iipersist-db-data** is a [Data Volume Container](https://docs.docker.com/userguide/dockervolumes/) for the database storage.
 1. **iipersist-gems-2.1** is another Data Volume Container for the gems.
 
 ## Deploying to production
@@ -41,7 +40,7 @@ Scripts are located in `scripts` directory.
 
 ### fig_remove_containers.sh
 
-Cleanup script that removes containers for the app. Keeps the database and gems containers.
+Cleanup script that removes containers for the app. It does not remove the database and gems containers.
 This script can be run after `fig stop` and `fig rm`.
 
 
