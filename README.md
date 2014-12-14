@@ -130,7 +130,7 @@ Resources that helped me with this project:
 
 * [A Rails development environment using Docker through Fig](http://www.whitesmith.co/blog/a-rails-development-environment-using-docker-through-fig/)
 
-## Homies help homies, always
+## Feedback welcome
 
 If you stuck and need help - do not hesitate to create a ticket.
 
