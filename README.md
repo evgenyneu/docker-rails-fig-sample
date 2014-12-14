@@ -38,9 +38,9 @@ Following docker containers are created:
 
 `./script/docker_create_deploy_image.sh myaccount/image`
 
-User your Docker Hub account name and deployment image name.
+User your Docker Hub account name and deployment image name. Deployment image contains your source code so you may want to make repository private.
 
-### 2. Push the image to your private Docker Hub repository.
+### 2. Push the image to Docker Hub
 
 `docker push myaccount/image`
 
