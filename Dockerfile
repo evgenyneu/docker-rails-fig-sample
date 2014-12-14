@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 ENV GEM_HOME /usr/local/bundle
 ENV PATH $GEM_HOME/bin:$PATH
 
-ONBUILD COPY . /usr/src/app
+ONBUILD COPY ../ /usr/src/app
 
 EXPOSE 3000
 CMD ["rails", "server"]
