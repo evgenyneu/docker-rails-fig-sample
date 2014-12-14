@@ -45,14 +45,16 @@ Use your Docker Hub account name and deployment image name. The single purpose o
 
 ### 3. Copy fig_production.yml
 
-1. In `fig_production.yml` replace `myaccount/image` with correct account and image.
-1. Copy `fig_production.yml` to `fig.yml` on your production host.
-1. Use docker_upload_data_volume_container.sh to upload database files and Gems to your server:
+1. In `fig_production.yml` replace `myaccount/image` with the image name you specified in step 1.
+1. Copy `fig_production.yml` to `fig.yml` to your production host.
+1. Use `docker_upload_data_volume_container.sh` script to upload database files and Gems to your server:
 
 ```
 ./scripts/docker_upload_data_volume_container.sh iipersist-gems-2.1 /usr/local/bundle myserver.com
 ./scripts/docker_upload_data_volume_container.sh iipersist-db-data /var/lib/postgresql/data myserver.com
 ```
+
+Here replace `myserver.com` with your production server name.
 
 ### 4. Create production environment
 
