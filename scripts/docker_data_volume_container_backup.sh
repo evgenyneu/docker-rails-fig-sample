@@ -15,11 +15,10 @@ handle_error(){
   fi
 }
 
-
 CONTAINER_NAME=$1
 VOLUME_PATH=$2
 
-sudo docker run --rm --volumes-from $CONTAINER_NAME -v $(pwd):/backup ubuntu tar czvf /backup/$CONTAINER_NAME.tar.gz $VOLUME_PATH
+docker run --rm --volumes-from $CONTAINER_NAME -v $(pwd):/backup ubuntu tar czvf /backup/$CONTAINER_NAME.tar.gz $VOLUME_PATH
 handle_error $? "archiving data volume container"
 
 print_success "Data is archived into $CONTAINER_NAME.tar.gz"
