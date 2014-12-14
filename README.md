@@ -132,9 +132,7 @@ Resources that helped me with this project:
 
 ## Feedback welcome
 
-If you stuck and need help - do not hesitate to ask.
-
-
+Feel free to create an issue ticket. Or if you are stuck and need help please do not hesitate to ask.
 
 
 
