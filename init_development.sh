@@ -85,6 +85,7 @@ bootstrap(){
 
   # Setup database
   print_info "Setting up the database (rake db:setup)"
+  fig run web rake db:create
   fig run web rake db:migrate
   handle_error $? "setting up the database"
 
