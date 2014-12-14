@@ -1,8 +1,7 @@
-# Rails app with Postgres DB with Docker/Fig sample
-
+# Using Rails/Postgres with Docker and Fig
 
 This repository is a sample Rails app. It uses Docker to keep its compenents in separate containers.
-This repository is a fork from [https://github.com/whitesmith/rails-pg-fig-sample][].
+This repository is based on [https://github.com/whitesmith/rails-pg-fig-sample](https://github.com/whitesmith/rails-pg-fig-sample).
 
 ## Installation
 
