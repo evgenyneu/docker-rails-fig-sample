@@ -106,7 +106,7 @@ Resources that helped me with this project:
 
 ## Homies help homies, always
 
-If you stuck and need help - do not hesitate and create a ticket.
+If you stuck and need help - do not hesitate to create a ticket.
 
 
 
