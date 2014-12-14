@@ -92,6 +92,12 @@ Uploads iipersist-db-data Data Volume Container to myserver.com host.
 
 `./docker_upload_data_volume_container.sh iipersist-db-data /var/lib/postgresql/data myserver.com`
 
+## Reference
+
+Useful resources that helped me with this project:
+
+* [How to Create a Persistent Ruby Gems Container with Docker](http://www.atlashealth.com/blog/2014/09/persistent-ruby-gems-docker-container/)
+
 
 
 
