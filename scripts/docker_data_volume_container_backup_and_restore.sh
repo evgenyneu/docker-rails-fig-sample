@@ -27,8 +27,8 @@ HOST_SSH_ADDRESS=$3
 ARCHIVE_FILE_NAME=$CONTAINER_NAME.tar.gz
 BACKUP_DIR=backups
 
-if [ -n "$(ssh $HOST_SSH_ADDRESS \"sudo docker ps -a | grep $CONTAINER_NAME\")" ]; then
-  print_error "The data container ($CONTAINER_NAME) already exists. Please remove it first on remote host $HOST_SSH_ADDRESS"
+if [ -n "$(ssh $HOST_SSH_ADDRESS sudo docker ps -a | grep $CONTAINER_NAME)" ]; then
+  print_error "The data container $CONTAINER_NAME at remote host $HOST_SSH_ADDRESS already exists. Please remove it first and run this script again."
 else
   ./scripts/docker_data_volume_container_backup.sh $CONTAINER_NAME $VOLUME_PATH
   handle_error $? "archiving container $CONTAINER_NAME"
