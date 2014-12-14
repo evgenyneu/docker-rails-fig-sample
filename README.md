@@ -58,7 +58,7 @@ Here replace `myserver.com` with your production server name.
 
 ### 4. Create production environment
 
-Finally, run `fig up` on your production host.
+Finally, run `fig up` on your production host to create production environment and launch the app.
 
 ## Scripts
 
