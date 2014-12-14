@@ -23,10 +23,10 @@ handle_error(){
 # Swaps two dockerfiles
 # Usage: swap_dockerfiles Dockerfile_deployment Dockerfile_development
 swap_dockerfiles(){
-  mv Dockerfile $1
+  mv Dockerfile $2
   handle_error $? "moving Dockerfile"
 
-  mv $2 Dockerfile
+  mv $1 Dockerfile
   handle_error $? "moving Dockerfile"
 }
 
