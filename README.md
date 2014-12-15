@@ -35,7 +35,7 @@ Following docker containers are created:
 
 ### 1. Create a deployment image
 
-`./script/docker_create_deploy_image.sh myaccount/image`
+`./scripts/docker_create_deploy_image.sh myaccount/image`
 
 Use your Docker Hub account name and deployment image name. The single purpose of this step is to create a production image that contains app's source code. You may want to make this repository private.
 
